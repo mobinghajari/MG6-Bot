@@ -536,7 +536,9 @@ double CalculateLotSize(double entry, double sl)
 void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest &request, const MqlTradeResult &result)
 {
     // فقط معاملات بسته شده توسط ربات خودمان را بررسی کن
-    if(request.magic != InpMagic_Number && trans.magic != InpMagic_Number) return;
+    // در برخی نسخه‌های قدیمی MQL5 فیلد magic در ساختار MqlTradeTransaction تعریف نشده است
+    // بنابراین فقط مقدار magic موجود در درخواست را بررسی می‌کنیم
+    if(request.magic != InpMagic_Number) return;
 
     // اگر یک معامله (Deal) به تاریخچه اضافه شد
     if(trans.type == TRADE_TRANSACTION_DEAL_ADD)
